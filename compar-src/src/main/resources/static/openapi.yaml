@@ -1,0 +1,63 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0.1
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /api/v1/users:
+    get:
+      tags:
+        - user-controller
+      operationId: findAll
+      summary: Get a list of users or search for users based on various criteria
+      parameters:
+        - name: id
+          in: query
+          description: User identifier for search (optional).
+          schema:
+            type: integer
+            format: int64
+        - name: username
+          in: query
+          description: User name for search (optional).
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Parameter for sorting the list of users. Optional. Specify the field by which to sort (e.g., 'username', 'name', 'surname').
+          schema:
+            type: string
+        - name: order
+          in: query
+          description: Parameter for specifying the sorting order (asc or desc). Optional. Defaults to 'asc' if not provided.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response. Returns an array of UserModel objects sorted and filtered according to the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserModel'
+components:
+  schemas:
+    UserModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the user.
+        username:
+          type: string
+          description: User name.
+        name:
+          type: string
+          description: User name.
+        surname:
+          type: string
+          description: User surname.
